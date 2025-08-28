@@ -1,0 +1,47 @@
+.shine-text {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.shine-text::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-20deg);
+    animation: shine 2.5s ease-in-out infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -75%;
+    }
+    100% {
+        left: 125%;
+    }
+}
+
+/* Tambahkan ke file CSS global atau module */
+.reveal-effect {
+  animation: revealAnim 0.4s ease-out;
+}
+
+@keyframes revealAnim {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
