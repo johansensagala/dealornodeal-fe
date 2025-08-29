@@ -474,6 +474,14 @@ export default function Game40Koper({ params }: { readonly params: { readonly ga
         </button>
       </div>
 
+      <div className="mt-8 flex flex-wrap justify-center gap-4">
+        {randomQuiz?.answer && (
+          <div className="text-lg font-medium text-center text-gray-800 p-4 bg-gray-100 rounded-lg shadow">
+            Jawaban: {randomQuiz.answer}
+          </div>
+        )}
+      </div>
+
       {/* Flash effect */}
       <AnimatePresence>
         {showFlash && (
