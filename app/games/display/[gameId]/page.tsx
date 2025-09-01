@@ -63,7 +63,7 @@ export default function Game40Koper({ params }: { readonly params: { readonly ga
     }
   }
 
-  const handleOpenModalQuiz = async () => {
+  const handleOpenModalQuiz = async (quizId: number) => {
     try {
       setShowAnswer(false);
 
@@ -75,8 +75,15 @@ export default function Game40Koper({ params }: { readonly params: { readonly ga
       let attempts = 0;
 
       // coba fetch sampai dapat quiz baru atau max 10x
-      while (!quiz && attempts < 10) {
-        const res = await fetch(`${API_BASE_URL}/api/quizzes/random`);
+      while (!quiz) {
+        let res: Response;
+
+        if (quizId != 0) {
+          res = await fetch(`${API_BASE_URL}/api/quizzes/${quizId}`);
+        } else {
+          res = await fetch(`${API_BASE_URL}/api/quizzes/random`);
+        }
+
         if (!res.ok) throw new Error("Failed to fetch random quiz");
         const data: Quiz = await res.json();
 
@@ -195,7 +202,8 @@ export default function Game40Koper({ params }: { readonly params: { readonly ga
       }
 
       if (e.key.toLowerCase() === "q") {
-        await handleOpenModalQuiz();
+        await handleOpenModalQuiz(0);
+        console.log("untuk sementara dinonaktifkan");
       }
 
       // ✅❌ tombol X & O hanya berlaku kalau modal quiz terbuka

@@ -38,8 +38,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponseWithSoc
             });
 
             // 🔹 event buka modal quiz
-            socket.on("handle-open-modal-quiz", () => {
-                socket.broadcast.emit("handle-open-modal-quiz");
+            socket.on("handle-open-modal-quiz", (quizId) => {
+                socket.broadcast.emit("handle-open-modal-quiz", quizId);
             });
 
             // 🔹 event tutup modal quiz

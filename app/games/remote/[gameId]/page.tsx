@@ -65,7 +65,6 @@ export default function Game40Koper({ params }: { readonly params: { readonly ga
   }
 
   const handleOpenModalQuiz = async () => {
-    socket.emit("handle-open-modal-quiz", null);
 
     try {
       setShowAnswer(false);
@@ -78,7 +77,7 @@ export default function Game40Koper({ params }: { readonly params: { readonly ga
       let attempts = 0;
 
       // coba fetch sampai dapat quiz baru atau max 10x
-      while (!quiz && attempts < 10) {
+      while (!quiz) {
         const res = await fetch(`${API_BASE_URL}/api/quizzes/random`);
         if (!res.ok) throw new Error("Failed to fetch random quiz");
         const data: Quiz = await res.json();
@@ -94,10 +93,13 @@ export default function Game40Koper({ params }: { readonly params: { readonly ga
       if (quiz) {
         setRandomQuiz(quiz);
 
+        socket.emit("handle-open-modal-quiz", quiz.id);
+
         // play reveal saat quiz muncul
         const reveal = new Audio("/sounds/reveal.mp3");
         reveal.volume = 0.7;
         reveal.play();
+        console.log(shownQuizIds)
       } else {
         console.log("Semua quiz sudah pernah ditampilkan 🎉");
       }
